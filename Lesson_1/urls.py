@@ -4,7 +4,7 @@ from views import Index, About, Contact
 
 # front controller
 def secret_front(request):
-    request['date'] = date.today()
+    request['date'] = date.today().strftime("%B %d, %Y")
 
 
 def other_front(request):

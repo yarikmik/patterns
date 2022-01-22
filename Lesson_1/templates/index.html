@@ -2,7 +2,8 @@
 <html>
 
 <head>
-    <title>textured_blue</title>
+    <title>Index</title>
+    <meta charset="UTF-8">
     <!--  <meta name="description" content="website description" />-->
     <!--  <meta name="keywords" content="website keywords, website keywords" />-->
     <!--  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />-->
@@ -19,7 +20,7 @@
 
         body {
             font: normal .80em 'trebuchet ms', arial, sans-serif;
-            background: #F0EFE2 url(background.png) repeat;
+            background: #F0EFE2 url(./images/background.png) repeat;
             color: #777;
         }
 
@@ -120,7 +121,7 @@
         }
 
         #header {
-            background: #1D1D1D url(header.png) repeat;
+            background: #1D1D1D url(./images/header.png) repeat;
             height: 240px;
         }
 
@@ -224,7 +225,7 @@
         .sidebar li a, .sidebar li a:hover {
             padding: 0 0 0 40px;
             display: block;
-            background: transparent url(link.png) no-repeat left center;
+            background: transparent url(./images/link.png) no-repeat left center;
         }
 
         .sidebar li a.selected {
@@ -244,7 +245,7 @@
 
         #content ul li {
             list-style-type: none;
-            background: url(bullet.png) no-repeat;
+            background: url(./images/bullet.png) no-repeat;
             margin: 0 0 6px 0;
             padding: 0 0 4px 25px;
             line-height: 1.5em;
@@ -371,8 +372,8 @@
         <div id="logo">
             <div id="logo_text">
                 <!-- class="logo_colour", allows you to change the colour of the text -->
-                <h1><a href="/">textured<span class="logo_colour">blue</span></a></h1>
-                <h2>Simple. Contemporary. Website Template.</h2>
+                <h1><a href="/">flaping<span class="logo_colour">Telecom</span></a></h1>
+                <h2>оператор интернет связи</h2>
             </div>
         </div>
         <div id="menubar">
@@ -389,17 +390,17 @@
     <div id="site_content">
         <div class="sidebar">
             <!-- insert your sidebar items here -->
-            <h3>Latest News</h3>
-            <h4>New Website Launched</h4>
+            <h3>Последние новости</h3>
+            <h4>Запущен новый тариф</h4>
             <h5>{{date}}</h5>
-            <p>2013 sees the redesign of our website. Take a look around and let us know what you think.<br/><a
-                    href="#">Read more</a></p>
+            <p>Встречайте новый тариф "Ниагарский водопад"<br/><a
+                    href="#">Подробнее...</a></p>
             <p></p>
-            <h4>New Website Launched</h4>
+            <h4>Изменение стоимости услуг</h4>
             <h5>{{date}}</h5>
-            <p>2013 sees the redesign of our website. Take a look around and let us know what you think.<br/><a
-                    href="#">Read more</a></p>
-            <h3>Useful Links</h3>
+            <p>Информируем, что по некоторым тарифам была изменена стоимость<br/><a
+                    href="#">Подробнее...</a></p>
+            <h3>Прочее</h3>
             <ul>
                 <li><a href="#">link 1</a></li>
                 <li><a href="#">link 2</a></li>
@@ -410,32 +411,44 @@
             <form method="post" action="#" id="search_form">
                 <p>
                     <input class="search" type="text" name="search_field" value="Enter keywords....."/>
-                    <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="style/search.png"
+                    <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="images/search.png"
                            alt="Search" title="Search"/>
                 </p>
             </form>
         </div>
         <div id="content">
             <!-- insert the page content here -->
-            <h1>Welcome to the textured_blue template</h1>
-            <p>This standards compliant, simple, fixed width website template is released as an 'open source' design
-                (under a <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0
-                    Licence</a>), which means that you are free to download and use it for anything you want (including
-                modifying and amending it). All I ask is that you leave the 'design from HTML5webtemplates.co.uk' link
-                in the footer of the template, but other than that...</p>
-            <p>This template is written entirely in <strong>HTML5</strong> and <strong>CSS</strong>, and can be
-                validated using the links in the footer.</p>
-            <p>You can view more free HTML5 web templates <a href="http://www.html5webtemplates.co.uk">here</a>.</p>
-            <p>This template is a fully functional 5 page website, with an <a href="about.html">examples</a> page
-                that gives examples of all the styles available with this design.</p>
-            <h2>Browser Compatibility</h2>
-            <p>This template has been tested in the following browsers:</p>
-            <ul>
-                <li>Internet Explorer 8</li>
-                <li>Internet Explorer 7</li>
-                <li>FireFox 3.5</li>
-                <li>Google Chrome 6</li>
-            </ul>
+            <h1>Добро пожаловать на портал "flapingTelecome" </h1>
+            <p>Здесь можно ознакомится с предлагаемыми тарифами связи</p>
+            <h2>Тарифы</h2>
+<!--            <p>Tables should be used to display data and not used for laying out your website:</p>-->
+            <table style="width:100%; border-spacing:0;">
+                <tr>
+                    <th>Тариф</th>
+                    <th>Описание</th>
+                    <th>Стоимость</th>
+                </tr>
+                <tr>
+                    <td>Ручей</td>
+                    <td>до 100 Мбит/с, +160 каналов IPTV</td>
+                    <td>500 р/мес</td>
+                </tr>
+                <tr>
+                    <td>Река</td>
+                    <td>до 200 Мбит/с, +160 каналов IPTV</td>
+                    <td>600 р/мес</td>
+                </tr>
+                <tr>
+                    <td>Водопад</td>
+                    <td>до 300 Мбит/с, +160 каналов IPTV</td>
+                    <td>800 р/мес</td>
+                </tr>
+                <tr>
+                    <td>Ниагарский водопад</td>
+                    <td>до 500 Мбит/с, +160 каналов IPTV</td>
+                    <td>1000 р/мес</td>
+                </tr>
+            </table>
         </div>
     </div>
     <div id="footer">
