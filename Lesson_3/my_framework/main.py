@@ -37,6 +37,8 @@ class Framework:
         method = environ['REQUEST_METHOD']
         request['method'] = method
 
+        request['path_info'] = path  # добавим информацию о текущей странице
+
         if method == 'POST':
             data = post_request_params(environ)
             request['data'] = decoding_data(data)
