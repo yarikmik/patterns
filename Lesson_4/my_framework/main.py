@@ -41,6 +41,9 @@ class Framework:
 
         if method == 'POST':
             data = post_request_params(environ)
+            # в POS так же добаляю информацию QUERY_STRING
+            request_params = get_request_params(environ)
+            request['request_params'] = decoding_data(request_params)
             request['data'] = decoding_data(data)
             print(f'Получен POST: {decoding_data(data)}')
         if method == 'GET':

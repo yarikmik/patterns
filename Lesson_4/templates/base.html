@@ -1,15 +1,28 @@
-="reference internal" href="messenger.unit_test.html#messenger-unit-test-test-utils-module">messenger.unit_test.test_utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="messenger.unit_test.html#module-messenger.unit_test">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="messenger.unit_tests.html">messenger.unit_tests package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="messenger.unit_tests.html#module-messenger.unit_tests">Module contents</a></li>
-</ul>
-</li>
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="UTF-8">
+    {% block style %}{% endblock %}
+</head>
+<body>
+<!--{% set active_page = current_path %}-->
+<div id="main">
+    <div id="header">
+        <div id="logo">
+            <div id="logo_text">
+                <!-- class="logo_colour", allows you to change the colour of the text -->
+                <h1><a href="/">flaping<span class="logo_colour">Telecom</span></a></h1>
+                <h2>оператор интернет связи</h2>
+            </div>
+        </div>
+        {% block menubar %} {% endblock %}
+    </div>
+    <div id="site_content">
+        {% block sidebar %} {% endblock %}
+        {% block content %} {% endblock %}
+    </div>
+    {% block footer %} {% endblock %}
 </div>
-</section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">I
+</body>
+</html>
