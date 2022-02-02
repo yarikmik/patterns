@@ -34,7 +34,8 @@ class Prototype:
 
 
 class Service(Prototype):
-    def __init__(self, name, order):
+    def __init__(self, s_type, name, order):
+        self.type = s_type
         self.name = name
         self.order = order
         self.order.services.append(self)
@@ -61,7 +62,7 @@ class ServiceFactory:
 
     @classmethod
     def create(cls, s_type, name, order):
-        return cls.service_types[s_type](name, order)
+        return cls.service_types[s_type](s_type, name, order)
 
 
 # заказ
@@ -73,14 +74,13 @@ class Order(Prototype):
         self.description = description
         self.order = order
         self.services = []
-        self.count = self.services_count()
         self.id = Order.auto_id
         Order.auto_id += 1
 
     def services_count(self):
         result = len(self.services)
-        if self.services:
-            result += self.services.services_count()
+        # if self.services:
+        #     result += self.services.services_count()
         return result
 
 
@@ -104,11 +104,6 @@ class Engine:
     def create_order(name, description, order=None):
         return Order(name, description, order)
 
-    # def get_order_by_name(self, name):
-    #     for order in self.orders:
-    #         if order.name == name:
-    #             return order
-    #     return None
 
     def get_order_by_id(self, id):
         for item in self.orders:
@@ -116,6 +111,12 @@ class Engine:
             if item.id == id:
                 return item
         raise Exception(f'Нет заказа с id = {id}')
+
+    def get_service(self, name):
+        for service in self.services:
+            if service.name == name:
+                return service
+        return None
 
     @staticmethod
     def decode_value(val):

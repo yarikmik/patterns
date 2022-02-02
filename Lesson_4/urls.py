@@ -1,5 +1,5 @@
 from datetime import date
-from views import Index, About, Contact, CreateOrders, OrderEdit, ServiceAdd
+from views import Index, About, Contact, CreateOrders, OrderEdit, CopyService
 
 
 # front controller
@@ -19,5 +19,5 @@ routes = {
     '/contact/': Contact(),
     '/orders/': CreateOrders(),
     '/order_edit/': OrderEdit(),
-    '/add_service/': ServiceAdd(),
+    '/copy-service/': CopyService(),
 }

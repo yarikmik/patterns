@@ -31,17 +31,33 @@
 
         {% for services in services_list %}
         <tr>
-<!--            <td>{{object.id}}</td>-->
-            <td>{{object.name}}</td>
-            <td>{{object.description}}</td>
-<!--            <td><a href="/order_edit/?id={{object.id}}">Copy...</a></td>-->
+            <td>{{services.name}}</td>
+            <td>{{services.type}}</td>
+            <td><a href="/copy-service/?name={{services.name}}&id={{id}}">Copy...</a></td>
         </tr>
         {% endfor %}
     </table> <br>
 
-        <a href="/add_service/?id={{id}}"><h4>Добавить сервис</h4></a>
+    <h4>Добавить сервис</h4>
+    <form action="#" method="post">
+        <div class="form_settings">
+            <p><span>Наименование</span><input type="text" name="service_name" value=""></p>
+            <!--        <p><span>Описание</span><textarea rows="8" cols="50" name="description"></textarea></p>-->
+            <p><span>Тип сервиса</span><select id="id" name="ServiceType">
+                {% for service_type in services_type_list %}
+                <option value="{{service_type}}">{{service_type}}</option>
+                {% endfor %}
+            </select></p>
+            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="button"
+                                                                   value="add service">
+            </p>
+        </div>
+
+<!--        <a href="/order_edit/?id={{id}}">В заказ</a>-->
+        <!--        <a href="/add_service/?id={{id}}"><h4>Добавить сервис</h4></a>-->
         <a href="/orders/">В заказы</a>
 </div>
+
 {% endblock %}
 
 {% block footer %}
