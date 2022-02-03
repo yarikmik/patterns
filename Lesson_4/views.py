@@ -1,29 +1,34 @@
 from my_framework.templator import render
-from my_patterns.creational_patterns import Engine
+from my_patterns.creational_patterns import Engine, Logger
 
+logger = Logger('views')
 site = Engine()
 
 
 class Index:
     def __call__(self, request):
+        logger.log('основная страница')
         return '200 OK', render('index.html', current_path=request.get('path_info', None),
                                 date=request.get('date', None))
 
 
 class Contact:
     def __call__(self, request):
+        logger.log('контакты')
         return '200 OK', render('contact.html', current_path=request.get('path_info', None),
                                 date=request.get('date', None))
 
 
 class About:
     def __call__(self, request):
+        logger.log('страница About')
         return '200 OK', render('about.html', current_path=request.get('path_info', None),
                                 date=request.get('date', None))
 
 
 class CreateOrders:
     def __call__(self, request):
+        logger.log('страница создания заказов')
         if request['method'] == 'POST':
             data = request['data']
             # создаем новый заказ
@@ -44,6 +49,7 @@ class CreateOrders:
 
 class OrderEdit:
     def __call__(self, request):
+        logger.log('редактирование заказов')
         try:
             order = site.get_order_by_id(int(request['request_params']['id']))
         except KeyError:
@@ -73,9 +79,8 @@ class CopyService:
 
             old_service = site.get_service(name)
             if old_service:
-                new_name = f'copy_{name}'
                 new_service = old_service.clone()
-                new_service.name = new_name
+                new_service.name = f'copy_{name}'
                 site.services.append(new_service)
 
                 return '200 OK', render('order_edit.html', services_list=order.services,

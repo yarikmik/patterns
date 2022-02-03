@@ -104,7 +104,6 @@ class Engine:
     def create_order(name, description, order=None):
         return Order(name, description, order)
 
-
     def get_order_by_id(self, id):
         for item in self.orders:
             print('item', item.id)
@@ -123,3 +122,24 @@ class Engine:
         val_b = bytes(val.replace('%', '=').replace("+", " "), 'UTF-8')
         val_decode_str = decodestring(val_b)
         return val_decode_str.decode('UTF-8')
+
+
+class Singleton(type):
+    def __init__(cls, name, bases, attrs, **kwargs):
+        super().__init__(name, bases, attrs)
+        cls.__instance = None
+
+    def __call__(cls, *args, **kwargs):
+        if cls.__instance is None:
+            cls.__instance = super().__call__(*args, **kwargs)
+        return cls.__instance
+
+
+class Logger(metaclass=Singleton):
+
+    def __init__(self, name):
+        self.name = name
+
+    @staticmethod
+    def log(text):
+        print('log--->', text)
