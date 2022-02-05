@@ -1,32 +1,43 @@
 from my_framework.templator import render
+from my_patterns.structur_patterns import UrlRoute, Debug
 from my_patterns.creational_patterns import Engine, Logger
 
 logger = Logger('views')
 site = Engine()
 
+routes_dec = {}
 
+
+@UrlRoute(routes=routes_dec, url='/')
 class Index:
+    @Debug()
     def __call__(self, request):
         logger.log('основная страница')
         return '200 OK', render('index.html', current_path=request.get('path_info', None),
                                 date=request.get('date', None))
 
 
+@UrlRoute(routes=routes_dec, url='/contact/')
 class Contact:
+    @Debug()
     def __call__(self, request):
         logger.log('контакты')
         return '200 OK', render('contact.html', current_path=request.get('path_info', None),
                                 date=request.get('date', None))
 
 
+@UrlRoute(routes=routes_dec, url='/about/')
 class About:
+    @Debug()
     def __call__(self, request):
         logger.log('страница About')
         return '200 OK', render('about.html', current_path=request.get('path_info', None),
                                 date=request.get('date', None))
 
 
+@UrlRoute(routes=routes_dec, url='/orders/')
 class CreateOrders:
+    @Debug()
     def __call__(self, request):
         logger.log('страница создания заказов')
         if request['method'] == 'POST':
@@ -48,6 +59,7 @@ class CreateOrders:
 
 
 class OrderEdit:
+    @Debug()
     def __call__(self, request):
         logger.log('редактирование заказов')
         try:
@@ -70,6 +82,7 @@ class OrderEdit:
 
 
 class CopyService:
+    @Debug()
     def __call__(self, request):
         request_params = request['request_params']
         order = site.get_order_by_id(int(request['request_params']['id']))
@@ -88,4 +101,3 @@ class CopyService:
                                         name=order.name, id=order.id, description=order.description)
         except KeyError:
             return '200 OK', 'Ошибка, нет такого сервиса'
-

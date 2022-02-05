@@ -1,5 +1,5 @@
 from datetime import date
-from views import Index, About, Contact, CreateOrders, OrderEdit, CopyService
+from views import Index, About, Contact, CreateOrders, OrderEdit, CopyService, routes_dec
 
 
 # front controller
@@ -14,10 +14,12 @@ def other_front(request):
 fronts = [secret_front, other_front]
 
 routes = {
-    '/': Index(),
-    '/about/': About(),
-    '/contact/': Contact(),
-    '/orders/': CreateOrders(),
+    # '/': Index(),
+    # '/about/': About(),
+    # '/contact/': Contact(),
+    # '/orders/': CreateOrders(),
     '/order_edit/': OrderEdit(),
     '/copy-service/': CopyService(),
 }
+
+routes.update(routes_dec)
