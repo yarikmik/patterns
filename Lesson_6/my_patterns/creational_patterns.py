@@ -1,31 +1,37 @@
 from copy import deepcopy
 from quopri import decodestring
+from .behavioral_patterns import Subject
 
 
 # абстрактный клиент
-class Client:
-    pass
+class User:
+    def __init__(self, name):
+        self.name = name
 
 
 # физическое лицо
-class Entity(Client):
-    pass
+class Manager(User):
+    def __init__(self, name):
+        self.orders = []
+        super().__init__(name)
 
 
 # юридическое лицо
-class Individual(Client):
-    pass
+class Operator(User):
+    def __init__(self, name):
+        self.orders = []
+        super().__init__(name)
 
 
-class ClientFactory:
-    client_types = {
-        'entity': Entity,
-        'individual': Individual,
+class UserFactory:
+    user_types = {
+        'manager': Manager,
+        'operator': Operator,
     }
 
     @classmethod
-    def create(cls, c_type):
-        return cls.client_types[c_type]()
+    def create(cls, u_type, name):
+        return cls.user_types[u_type](name)
 
 
 class Prototype:
@@ -66,7 +72,7 @@ class ServiceFactory:
 
 
 # заказ
-class Order(Prototype):
+class Order(Prototype, Subject):
     auto_id = 0
 
     def __init__(self, name, description, order):
@@ -74,8 +80,18 @@ class Order(Prototype):
         self.description = description
         self.order = order
         self.services = []
+        self.users = []
         self.id = Order.auto_id
         Order.auto_id += 1
+        super().__init__()
+
+    # def __getitem__(self, item):
+    #     return self.users[item]
+
+    def add_user(self, user):
+        self.users.append(user)
+        user.orders.append(self)
+        self.notify()
 
     def services_count(self):
         result = len(self.services)
@@ -87,14 +103,16 @@ class Order(Prototype):
 class Engine:
     def __init__(self):
         self.service_types = ServiceFactory.service_types
+        self.user_types = UserFactory.user_types
         self.entity = []
         self.individual = []
         self.services = []
         self.orders = []
+        self.users = []
 
     @staticmethod
-    def create_client(c_type):
-        return ClientFactory.create(c_type)
+    def create_user(u_type, name):
+        return UserFactory.create(u_type, name)
 
     @staticmethod
     def create_service(service_type, name, order):
@@ -116,6 +134,11 @@ class Engine:
             if service.name == name:
                 return service
         return None
+
+    def get_user(self, name):
+        for user in self.users:
+            if user.name == name:
+                return user
 
     @staticmethod
     def decode_value(val):

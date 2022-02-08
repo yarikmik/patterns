@@ -18,8 +18,8 @@ routes = {
     # '/about/': About(),
     # '/contact/': Contact(),
     # '/orders/': CreateOrders(),
-    '/order_edit/': OrderEdit(),
-    '/copy-service/': CopyService(),
+    # '/order_edit/': OrderEdit(),
+    # '/copy-service/': CopyService(),
 }
 
 routes.update(routes_dec)

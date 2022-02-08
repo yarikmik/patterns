@@ -1,9 +1,12 @@
 from my_framework.templator import render
 from my_patterns.structur_patterns import UrlRoute, Debug
 from my_patterns.creational_patterns import Engine, Logger
+from my_patterns.behavioral_patterns import EmailNotifier, SmsNotifier, BaseSerializer
 
 logger = Logger('views')
 site = Engine()
+email_notifier = EmailNotifier()
+sms_notifier = SmsNotifier()
 
 routes_dec = {}
 
@@ -58,6 +61,7 @@ class CreateOrders:
                                 object_list=site.orders, )
 
 
+@UrlRoute(routes=routes_dec, url='/order_edit/')
 class OrderEdit:
     @Debug()
     def __call__(self, request):
@@ -69,18 +73,36 @@ class OrderEdit:
 
         if request['method'] == 'POST':
             data = request['data']
-            if data['service_name']:
+            if data['button'] == 'add service':
                 new_service = site.create_service(data['ServiceType'], data['service_name'], order)
                 site.services.append(new_service)
                 return '200 OK', render('order_edit.html', services_list=order.services,
                                         services_type_list=site.service_types,
-                                        name=order.name, id=order.id, description=order.description)
+                                        user_types_list=site.user_types,
+                                        name=order.name, id=order.id, description=order.description,
+                                        users=order.users)
+
+            if data['button'] == 'add employee':
+                new_user = site.create_user(data['user_type'], data['user_name'])
+                site.users.append(new_user)
+                order.observers.append(email_notifier)
+                order.observers.append(sms_notifier)
+                order.add_user(new_user)
+
+                return '200 OK', render('order_edit.html', services_list=order.services,
+                                        services_type_list=site.service_types,
+                                        user_types_list=site.user_types,
+                                        name=order.name, id=order.id, description=order.description,
+                                        users=order.users)
 
         return '200 OK', render('order_edit.html', services_list=order.services,
                                 services_type_list=site.service_types,
-                                name=order.name, id=order.id, description=order.description)
+                                user_types_list=site.user_types,
+                                name=order.name, id=order.id, description=order.description,
+                                users=order.users)
 
 
+@UrlRoute(routes=routes_dec, url='/copy-service/')
 class CopyService:
     @Debug()
     def __call__(self, request):
@@ -101,3 +123,10 @@ class CopyService:
                                         name=order.name, id=order.id, description=order.description)
         except KeyError:
             return '200 OK', 'Ошибка, нет такого сервиса'
+
+
+@UrlRoute(routes=routes_dec, url='/api/')
+class OrderApi:
+    @Debug()
+    def __call__(self, request):
+        return '200 OK', BaseSerializer(site.orders).save()

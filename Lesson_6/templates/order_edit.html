@@ -19,7 +19,30 @@
 {% block content %}
 <div id="content">
     <h2>Заказ: "{{name}}" (id:{{id}})</h2>
-    <h5>{{description}}</h5><br>
+    <h5>Описание: {{description}}</h5><br>
+    <h4>Добавить Ответственного</h4>
+    <form action="#" method="post">
+        <div class="form_settings">
+            <p><span>Имя</span><input type="text" name="user_name" value=""></p>
+            <!--        <p><span>Описание</span><textarea rows="8" cols="50" name="description"></textarea></p>-->
+            <p><span>Должность</span><select id="id" name="user_type">
+                {% for user_type in user_types_list %}
+                <option value="{{user_type}}">{{user_type}}</option>
+                {% endfor %}
+            </select></p>
+            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="button"
+                                                                   value="add employee">
+            </p>
+        </div>
+    </form><br>
+    {% if users.0 %}
+    <h5>Ответственные:</h5>
+        {% endif %}
+
+    {% for user in users %}
+    <p>{{user.name}}</p>
+    {% endfor %}
+
 
         <table style="width:100%; border-spacing:0;">
         <tr>
@@ -52,6 +75,7 @@
                                                                    value="add service">
             </p>
         </div>
+    </form>
 
 <!--        <a href="/order_edit/?id={{id}}">В заказ</a>-->
         <!--        <a href="/add_service/?id={{id}}"><h4>Добавить сервис</h4></a>-->
