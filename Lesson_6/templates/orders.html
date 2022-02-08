@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+заказы
+{% endblock %}
+
+{% block style %}
+{% include "include_style.html" %}
+{% endblock %}
+
+{% block menubar %}
+{% include "include_menubar.html" %}
+{% endblock %}
+
+{% block sidebar %}
+{% include "include_sidebar.html" %}
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    <h2>Добавить заказ</h2>
+    <form action="#" method="post">
+        <div class="form_settings">
+            <p><span>Новый заказ</span><input type="text" name="order_name" value=""></p>
+            <p><span>Описание</span><textarea rows="8" cols="50" name="description"></textarea></p>
+            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="button"
+                                                                   value="add order">
+            </p>
+        </div>
+    </form>
+    <table style="width:100%; border-spacing:0;">
+        <tr>
+            <th>id</th>
+            <th>Имя</th>
+            <th>Описание</th>
+            <th>Колличество сервисов</th>
+            <th>Редактирование</th>
+        </tr>
+
+        {% for object in object_list %}
+        <tr>
+            <td>{{object.id}}</td>
+            <td>{{object.name}}</td>
+            <td>{{object.description}}</td>
+            <td>{{object.services_count()}}</td>
+            <td><a href="/order_edit/?id={{object.id}}">Edit...</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{% include "include_footer.html" %}
+{% endblock %}
