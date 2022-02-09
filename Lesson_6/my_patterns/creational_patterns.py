@@ -76,6 +76,10 @@ class Order(Prototype, Subject):
     auto_id = 0
 
     def __init__(self, name, description, order):
+        # добавил типы, что бы к ним можно было обращатся через заказ в order_edit
+        # self.service_types = ServiceFactory.service_types
+        # self.user_types = UserFactory.user_types
+
         self.name = name
         self.description = description
         self.order = order
@@ -160,9 +164,10 @@ class Singleton(type):
 
 class Logger(metaclass=Singleton):
 
-    def __init__(self, name):
+    def __init__(self, name, writer):
         self.name = name
+        self.writer = writer
 
-    @staticmethod
-    def log(text):
-        print('log--->', text)
+    def log(self, text):
+        text = f'log---> {text}'
+        self.writer.write(text)

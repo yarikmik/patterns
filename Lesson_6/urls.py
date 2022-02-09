@@ -4,7 +4,11 @@ from views import Index, About, Contact, CreateOrders, OrderEdit, CopyService, r
 
 # front controller
 def secret_front(request):
-    request['date'] = date.today().strftime("%B %d, %Y")
+    request['context_data'] = {}
+    request['context_data']['date'] = date.today().strftime("%B %d, %Y")
+    request['context_data']['current_path'] = request.get('path_info')
+
+
 
 
 def other_front(request):
