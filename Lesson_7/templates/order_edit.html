@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}
+заказы
+{% endblock %}
+
+{% block style %}
+{% include "include_style.html" %}
+{% endblock %}
+
+{% block menubar %}
+{% include "include_menubar.html" %}
+{% endblock %}
+
+{% block sidebar %}
+{% include "include_sidebar.html" %}
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    <h2>Заказ: "{{objects_list.0.name}}" (id:{{objects_list.0.id}})</h2>
+    <h5>Описание: {{objects_list.0.description}}</h5><br>
+    <h4>Добавить Ответственного</h4>
+    <form action="#" method="post">
+        <div class="form_settings">
+            <p><span>Имя</span><input type="text" name="user_name" value=""></p>
+            <!--        <p><span>Описание</span><textarea rows="8" cols="50" name="description"></textarea></p>-->
+            <p><span>Должность</span><select id="id" name="user_type">
+                {% for user_type in user_types %}
+                <option value="{{user_type}}">{{user_type}}</option>
+                {% endfor %}
+            </select></p>
+            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="button"
+                                                                   value="add employee">
+            </p>
+        </div>
+    </form><br>
+    {% if objects_list.0.users.0 %}
+    <h5>Ответственные:</h5>
+        {% endif %}
+
+    {% for user in objects_list.0.users %}
+    <p>{{user.name}}</p>
+    {% endfor %}
+
+
+        <table style="width:100%; border-spacing:0;">
+        <tr>
+<!--            <th>id</th>-->
+            <th>Имя Сервиса</th>
+            <th>Тип сервиса</th>
+            <th>Скопировать</th>
+        </tr>
+
+        {% for services in objects_list.0.services %}
+        <tr>
+            <td>{{services.name}}</td>
+            <td>{{services.type}}</td>
+            <td><a href="/copy-service/?name={{services.name}}&id={{id}}">Copy...</a></td>
+        </tr>
+        {% endfor %}
+    </table> <br>
+
+    <h4>Добавить сервис</h4>
+    <form action="#" method="post">
+        <div class="form_settings">
+            <p><span>Наименование</span><input type="text" name="service_name" value=""></p>
+            <!--        <p><span>Описание</span><textarea rows="8" cols="50" name="description"></textarea></p>-->
+            <p><span>Тип сервиса</span><select id="id" name="ServiceType">
+                {% for service_type in service_types %}
+                <option value="{{service_type}}">{{service_type}}</option>
+                {% endfor %}
+            </select></p>
+            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="button"
+                                                                   value="add service">
+            </p>
+        </div>
+    </form>
+
+<!--        <a href="/order_edit/?id={{id}}">В заказ</a>-->
+        <!--        <a href="/add_service/?id={{id}}"><h4>Добавить сервис</h4></a>-->
+        <a href="/orders/">В заказы</a>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+{% include "include_footer.html" %}
+{% endblock %}

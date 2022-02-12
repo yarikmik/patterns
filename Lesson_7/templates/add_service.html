@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+заказы
+{% endblock %}
+
+{% block style %}
+{% include "include_style.html" %}
+{% endblock %}
+
+{% block menubar %}
+{% include "include_menubar.html" %}
+{% endblock %}
+
+{% block sidebar %}
+{% include "include_sidebar.html" %}
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    <h2>Заказ: "{{name}}" (id:{{id}})</h2>
+    <h5>{{description}}</h5><br>
+    <h4>Добавить сервис</h4>
+    <form action="#" method="post">
+        <div class="form_settings">
+            <p><span>Наименование</span><input type="text" name="service_name" value=""></p>
+            <!--        <p><span>Описание</span><textarea rows="8" cols="50" name="description"></textarea></p>-->
+            <p><span>Тип сервиса</span><select id="id" name="ServiceType">
+                {% for service_type in services_type_list %}
+                <option value="{{service_type}}">{{service_type}}</option>
+                {% endfor %}
+            </select></p>
+            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="button"
+                                                                   value="add service">
+            </p>
+        </div>
+
+        <a href="/order_edit/?id={{id}}">В заказ</a>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% include "include_footer.html" %}
+{% endblock %}
