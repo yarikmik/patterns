@@ -1,12 +1,15 @@
 from my_framework.templator import render
 from my_patterns.structur_patterns import UrlRoute, Debug
-from my_patterns.creational_patterns import Engine, Logger
+from my_patterns.creational_patterns import Engine, Logger, MapperRegistry
 from my_patterns.behavioral_patterns import EmailNotifier, SmsNotifier, BaseSerializer, CreateView, FileWriter
+from my_patterns.architectural_patterns import UnitOfWork
 
 logger = Logger('views', FileWriter())
 site = Engine()
 email_notifier = EmailNotifier()
 sms_notifier = SmsNotifier()
+UnitOfWork.new_current()
+UnitOfWork.get_current().set_mapper_registry(MapperRegistry)
 
 routes_dec = {}
 
@@ -48,6 +51,28 @@ class CreateOrders(CreateView):
         if data['order_name']:
             new_order = site.create_order(data['order_name'], data['description'])
             site.orders.append(new_order)
+
+
+@UrlRoute(routes=routes_dec, url='/operators/')
+class CreateOperators(CreateView):
+    template_name = 'operators.html'
+
+    def get_queryset(self):
+        mapper = MapperRegistry.get_current_mapper('User')
+        return mapper.all()
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['user_types'] = site.user_types
+        return context
+
+    @Debug()
+    def create_obj(self, data: dict):
+        if data['user_name']:
+            new_user = site.create_user(data['user_type'], data['user_name'])
+            site.users.append(new_user)
+            new_user.mark_new()
+            UnitOfWork.get_current().commit()
 
 
 @UrlRoute(routes=routes_dec, url='/order_edit/')
