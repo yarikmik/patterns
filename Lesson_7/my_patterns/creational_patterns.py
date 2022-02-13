@@ -142,8 +142,11 @@ class Engine:
                 return service
         return None
 
-    def get_user(self, name):
-        for user in self.users:
+    @staticmethod
+    def get_user(name):
+        mapper = MapperRegistry.get_current_mapper('User')
+        users = mapper.all()
+        for user in users:
             if user.name == name:
                 return user
 
@@ -188,9 +191,10 @@ class UserMapper:
         self.cursor.execute(statement)
         result = []
         for item in self.cursor.fetchall():
-            id, name, type = item
+            id, name, type, orders = item
             user = User(name, type)
             user.id = id
+            user.orders = orders
             result.append(user)
         return result
 

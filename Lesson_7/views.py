@@ -83,7 +83,9 @@ class OrderEdit(CreateView):
     def get_context_data(self):
         context = super().get_context_data()
         context['service_types'] = site.service_types
-        context['user_types'] = site.user_types
+        # context['user_types'] = site.user_types
+        mapper = MapperRegistry.get_current_mapper('User')
+        context['users'] = mapper.all()
         return context
 
     @Debug()
@@ -97,10 +99,13 @@ class OrderEdit(CreateView):
             new_service = site.create_service(data['ServiceType'], data['service_name'], order)
             site.services.append(new_service)
         if data['button'] == 'add employee' and data['user_name'] != '':
-            new_user = site.create_user(data['user_type'], data['user_name'])
+            mapper = MapperRegistry.get_current_mapper('User')
+            new_user = mapper.find_by_id(int(data['id']))
             site.users.append(new_user)
+
             order.observers.append(email_notifier)
             order.observers.append(sms_notifier)
+
             order.add_user(new_user)
 
 
@@ -128,7 +133,9 @@ class CopyService:
 
 
 @UrlRoute(routes=routes_dec, url='/api/')
-class OrderApi:
+class UserApi:
     @Debug()
     def __call__(self, request):
-        return '200 OK', BaseSerializer(site.orders).save()
+        user = site.get_user(request['request_params']['name'])
+        print(user)
+        return '200 OK', BaseSerializer(user).save()
