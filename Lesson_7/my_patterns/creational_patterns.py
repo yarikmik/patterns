@@ -97,7 +97,7 @@ class Order(Prototype, Subject):
 
     def add_user(self, user):
         self.users.append(user)
-        user.orders.append(self)
+        # user.orders.append(self)
         self.notify()
 
     def services_count(self):
@@ -191,15 +191,14 @@ class UserMapper:
         self.cursor.execute(statement)
         result = []
         for item in self.cursor.fetchall():
-            id, name, type, orders = item
+            id, name, type = item
             user = User(name, type)
             user.id = id
-            user.orders = orders
             result.append(user)
         return result
 
     def find_by_id(self, id):
-        statement = f"SELECT id, name FROM {self.tablename} WHERE id=?"
+        statement = f"SELECT name, type FROM {self.tablename} WHERE id=?"
         self.cursor.execute(statement, (id,))
         result = self.cursor.fetchone()
         if result:
